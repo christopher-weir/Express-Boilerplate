@@ -48,7 +48,7 @@ gulp.task('watch', function() {
     gulp.watch(defaultAssets.server.views, ['concact-html']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.server.allJS, ['jshint']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.client.views, ['concact-html', 'buildJs']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.js, ['jshint', 'buildJs']).on('change', plugins.livereload.changed);
+    gulp.watch(defaultAssets.client.js, ['jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.client.lessWatch, ['less']).on('change', plugins.livereload.changed);
 });
 
@@ -76,28 +76,48 @@ gulp.task('jshint', function () {
 gulp.task('buildLib', function () {
     return gulp.src(defaultAssets.client.lib.js)
         .pipe(plugins.concat('lib.js'))
-        .pipe(gulp.dest('public/dist'));
+        .pipe(gulp.dest('./.dist'));
 });
 
 
 // JS minifying task
 gulp.task('buildJs', function () {
-    return gulp.src(defaultAssets.client.buildJs)
+    return gulp.src(defaultAssets.client.js)
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.concat('application.js'))
-        .pipe(gulp.dest('public/dist'));
+        .pipe(gulp.dest('./.dist'));
 });
 
 
 // JS minifying task
 gulp.task('uglify', function () {
-    return gulp.src(defaultAssets.client.js)
-        .pipe(plugins.ngAnnotate())
-        .pipe(plugins.uglify({
-            mangle: false
-        }))
-        .pipe(plugins.concat('application.min.js'))
-        .pipe(gulp.dest('public/dist'));
+
+    if( process.env.NODE_ENV === 'production' ){
+        return gulp.src([
+                './.dist/lib.js',
+                './modules/core/client/app/config.js',
+                './modules/core/client/app/init.js',
+                './.dist/application.js',
+                './.dist/template.js'
+            ])
+            .pipe(plugins.ngAnnotate())
+            .pipe(plugins.uglify({
+                mangle: false
+            }))
+            .pipe(plugins.concat('app.min.js'))
+            .pipe(gulp.dest('public/js'));
+    }else{
+        return gulp.src([
+                './.dist/lib.js',
+                './modules/core/client/app/config.js',
+                './modules/core/client/app/init.js',
+                './.dist/application.js',
+                './.dist/template.js'
+            ])
+            .pipe(plugins.ngAnnotate())
+            .pipe(plugins.concat('app.js'))
+            .pipe(gulp.dest('public/js'));
+    }
 });
 
 // CSS minifying task
