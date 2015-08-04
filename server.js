@@ -6,7 +6,7 @@
 var config      = require('./config/config');
 var express     = require('./config/lib/express');
 var cluster     = require('express-cluster');
-
+var swig        = require('swig');
 
 
 cluster(function(worker) {

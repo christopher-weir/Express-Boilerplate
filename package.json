@@ -9,12 +9,14 @@
     "npm": "2.7.x"
   },
   "dependencies": {
+    "chalk": "^1.1.0",
     "express": "^4.13.3",
     "express-cluster": "0.0.3",
     "forever": "^0.15.1",
     "glob": "^5.0.14",
     "lodash": "^3.10.1",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "swig": "^1.4.2"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
