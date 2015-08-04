@@ -1,0 +1,38 @@
+{
+  "name": "express-boilerplate",
+  "description": "Awesome Express Boilerplate",
+  "version": "0.0.1",
+  "author": "Illuns ltd",
+  "private": true,
+  "engines": {
+    "node": "0.12.x",
+    "npm": "2.7.x"
+  },
+  "dependencies": {
+    "express": "*",
+    "forever": "*",
+    "glob": "*",
+    "lodash": "*",
+    "serve-favicon": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-concat": "*",
+    "gulp-csslint": "*",
+    "gulp-cssmin": "*",
+    "gulp-html2js": "*",
+    "gulp-jshint": "*",
+    "gulp-less": "*",
+    "gulp-livereload": "*",
+    "gulp-load-plugins": "*",
+    "gulp-mocha": "*",
+    "gulp-ng-annotate": "*",
+    "gulp-nodemon": "*",
+    "gulp-plumber": "*",
+    "gulp-protractor": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*",
+    "run-sequence": "*"
+  }
+}
