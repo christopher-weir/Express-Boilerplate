@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "express": "^4.13.3",
+    "express-cluster": "0.0.3",
     "forever": "^0.15.1",
     "glob": "^5.0.14",
     "lodash": "^3.10.1",
