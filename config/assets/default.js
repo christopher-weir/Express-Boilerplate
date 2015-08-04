@@ -8,20 +8,7 @@ module.exports = {
                 'public/lib/bootstrap/dist/css/bootstrap-theme.css'
             ],
             js: [
-                'bower_components/jquery-2.1.3.min/index.js',
-                'bower_components/cloudinary/js/jquery.cloudinary.js',
-                'bower_components/angular/angular.js',
-                'modules/core/client/app/cloudinary.config.js',
-                'bower_components/ngDialog/js/ngDialog.min.js',
-                //'bower_components/angular-resource/angular-resource.js',
-                //'public/lib/angular-animate/angular-animate.js',
-                //'public/lib/angular-ui-router/release/angular-ui-router.js',
-                //'public/lib/angular-ui-utils/ui-utils.js',
-                //'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-                'bower_components/ng-file-upload/ng-file-upload-all.min.js',
-                'bower_components/angular-sanitize/angular-sanitize.js',
-                'modules/core/lib/ui-bootstrap-custom-0.13.0.min.js',
-                'modules/core/lib/ui-bootstrap-custom-tpls-0.13.0.min.js'
+                'modules/core/lib/angular.min.js'
             ],
             tests: ['public/lib/angular-mocks/angular-mocks.js']
         },
@@ -31,18 +18,13 @@ module.exports = {
         lessWatch: [
             'modules/*/client/less/*.less'
         ],
-        js: [
+        coreJs: [
             'modules/core/client/app/config.js',
-            'modules/core/client/app/init.js',
-            'modules/*/client/*.js',
-            'modules/*/client/**/*.js'
+            'modules/core/client/app/init.js'
         ],
-        buildJs: [
-            'modules/core/client/app/config.js',
-            'modules/core/client/app/init.js',
+        js: [
             'modules/*/client/*.js',
-            'modules/*/client/**/*.js',
-            '.build/template.js'
+            'modules/*/client/!(app)/*.js'
         ],
         runJs: [
             'public/dist/application.js'
