@@ -11,7 +11,7 @@ var swig        = require('swig');
 
 cluster(function(worker) {
     // Initialize express
-    var app = express.init(db);
+    var app = express.init();
 
     // Start the app by listening on <port>
     app.listen(config.port);
