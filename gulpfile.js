@@ -59,7 +59,7 @@ gulp.task('concact-html', function() {
         useStrict: true
     }))
     .pipe(plugins.concat('template.js'))
-    .pipe(gulp.dest('./.build'));
+    .pipe(gulp.dest('./.dist'));
 });
 
 // JS linting task
