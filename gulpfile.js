@@ -45,10 +45,10 @@ gulp.task('watch', function() {
     plugins.livereload.listen();
 
     // Add watch rules
-    gulp.watch(defaultAssets.server.views, ['concact-html']).on('change', plugins.livereload.changed);
+    gulp.watch(defaultAssets.server.views, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.server.allJS, ['jshint']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.views, ['concact-html', 'buildJs']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.js, ['jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
+    gulp.watch(defaultAssets.client.views, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
+    gulp.watch(defaultAssets.client.js, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.client.lessWatch, ['less']).on('change', plugins.livereload.changed);
 });
 
@@ -174,5 +174,5 @@ gulp.task('prod', function(done) {
 
 // Run the project in development mode
 gulp.task('default', function(done) {
-    runSequence('env:dev', 'buildLib', 'lint', 'buildJs', ['nodemon', 'watch'], done);
+    runSequence('env:dev', 'concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify', 'lint', ['nodemon', 'watch'], done);
 });
