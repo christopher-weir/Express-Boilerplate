@@ -37,50 +37,9 @@
 
 <body class="ng-cloak" data-ng-controller="CoreCtrl">
 
-    <header class="global">
-
-        <div class="container">
-            <div class="row">
-                <div class="one column">
-                    Logo
-                </div>
-                <div class="nine columns">
-                    <header-search></header-search>
-                </div>
-
-                {% if user.username %}
-                <div class="one column">
-                    <post-add></post-add>
-                </div>
-                {% endif %}
-
-                {% if user.username %}
-                    <div class="one column">
-                        <a href="@{{ user.username }}">@{{ user.username }}</a>
-                    </div>
-                {% endif %}
-
-                {% if !user.username %}
-                    <div class="one column">
-                        login
-                    </div>
-                    <div class="one column">
-                        join
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-
-    </header>
-
     <section class="content">
             {% block content %}{% endblock %}
     </section>
-
-    <!--Embedding The User Object-->
-    <script type="text/javascript">
-        var user = {{ user | json | safe }};
-    </script>
 
 
     {% if process.env.NODE_ENV === 'development' %}
@@ -101,16 +60,6 @@
     <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
     {% endif %}
 
-    <!-- Google Analytics -->
-    <script>
-        // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        //  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        //      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        // ga('create', '{{googleAnalyticsTrackingID}}', 'auto');
-        // ga('send', 'pageview');
-    </script>
 </body>
 
 </html>
