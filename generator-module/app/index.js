@@ -62,6 +62,17 @@ module.exports = generators.Base.extend({
         this.template(
             '__service.client.service.js',
             'modules/' + this.appName + '/client/services/' + this.appName + '.client.service.js', context);
+
+
+
+
+        this.template(
+            '___controller.server.controller.js',
+            'modules/' + this.appName + '/server/controllers/' + this.appName + '.server.controller.js', context);
+
+        this.template(
+            '___controller.server.controller.js',
+            'modules/' + this.appName + '/server/routes/' + this.appName + '.server.controller.js', context);
     },
 });
 
