@@ -71,8 +71,8 @@ module.exports = generators.Base.extend({
             'modules/' + this.appName + '/server/controllers/' + this.appName + '.server.controller.js', context);
 
         this.template(
-            '___controller.server.controller.js',
-            'modules/' + this.appName + '/server/routes/' + this.appName + '.server.controller.js', context);
+            '___routes.server.routes.js',
+            'modules/' + this.appName + '/server/routes/' + this.appName + '.server.routes.js', context);
     },
 });
 
