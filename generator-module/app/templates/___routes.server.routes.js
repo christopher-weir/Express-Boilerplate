@@ -7,5 +7,5 @@ module.exports = function(app) {
     //console.log('------------------------\n\n\n\n test\n\n\n\n------------------------');
 
     // Define application route
-    app.route('/').get( <%= module_name %>.testCtrl );
+    app.route('/').get( <%= module_name %>.<%= module_name %>Ctrl );
 };

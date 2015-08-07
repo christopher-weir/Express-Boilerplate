@@ -3,7 +3,7 @@
 /**
  * testCtrl
  */
-exports.testCtrl = function(req, res) {
+exports.<%= module_name %>Ctrl = function(req, res) {
 
     res.send({'data': 'working'});
 
