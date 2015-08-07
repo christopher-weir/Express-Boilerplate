@@ -12,7 +12,7 @@ module.exports = generators.Base.extend({
 
         var prompts = [{
                 name: 'appName',
-                message: 'What is your app\'s name ?'
+                message: 'What is your modules name ?'
         }];
 
         this.prompt(prompts, function (props) {
