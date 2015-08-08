@@ -73,6 +73,10 @@ module.exports = generators.Base.extend({
         this.template(
             '___routes.server.routes.js',
             'modules/' + this.appName + '/server/routes/' + this.appName + '.server.routes.js', context);
+
+        this.template(
+            '___view.server.view.html',
+            'modules/' + this.appName + '/server/views/' + this.appName + '.server.view.html', context);
     },
 });
 
