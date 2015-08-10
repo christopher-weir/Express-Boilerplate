@@ -24,11 +24,38 @@ module.exports = generators.Base.extend({
             {name: 'Client And Server', value: 'both'}
           ],
           default: 'both'
+        },
+        {
+          when: function (response) {
+            var moduleType = response.moduleType;
+            if( moduleType === 'server' || moduleType === 'both' ){
+                return true;
+            }
+            return false;
+          },
+          type: 'list',
+          name: 'serverType',
+          message: 'What type of server module did you want to create?',
+          choices: [
+            {name: 'API', value: 'api'},
+            {name: 'Route', value: 'route'},
+            {name: 'API And Route', value: 'both'}
+          ],
+          default: 'both'
         }];
 
         this.prompt(prompts, function (props) {
+            // set the basic options
             this.moduleName = props.moduleName;
             this.moduleType = props.moduleType;
+
+            // set the server type
+            if( props.serverType ){
+                this.serverType = props.serverType;
+            }else{
+                this.serverType = false;
+            }
+
             done();
         }.bind(this));
     },
@@ -58,7 +85,8 @@ module.exports = generators.Base.extend({
     copyMainFiles: function(){
 
         var context = {
-            module_name: this.moduleName
+            module_name: this.moduleName,
+            server_type: this.serverType
         };
         // create client files
         if( this.moduleType === 'client' || this.moduleType === 'both' ){
@@ -86,17 +114,38 @@ module.exports = generators.Base.extend({
 
 
         if( this.moduleType === 'server' || this.moduleType === 'both' ){
-            this.template(
-                '___controller.server.controller.js',
-                'modules/' + this.moduleName + '/server/controllers/' + this.moduleName + '.server.controller.js', context);
 
+
+            if( this.serverType === 'api' || this.serverType === 'both' ){
+                // if api
+                this.template(
+                    '___controller.server.controller.js',
+                    'modules/' + this.moduleName + '/server/controllers/' + this.moduleName + '-api.server.controller.js', {
+                        module_name: this.moduleName,
+                        server_type: 'api'
+                    });
+            }
+
+
+            if( this.serverType === 'route' || this.serverType === 'both' ){
+
+                // if api
+                this.template(
+                    '___controller.server.controller.js',
+                    'modules/' + this.moduleName + '/server/controllers/' + this.moduleName + '-route.server.controller.js', {
+                        module_name: this.moduleName,
+                        server_type: 'route'
+                    });
+
+                this.template(
+                    '___view.server.view.html',
+                    'modules/' + this.moduleName + '/server/views/' + this.moduleName + '.server.view.html', context);
+            }
+
+            // if route
             this.template(
                 '___routes.server.routes.js',
                 'modules/' + this.moduleName + '/server/routes/' + this.moduleName + '.server.routes.js', context);
-
-            this.template(
-                '___view.server.view.html',
-                'modules/' + this.moduleName + '/server/views/' + this.moduleName + '.server.view.html', context);
         }
     },
 });
