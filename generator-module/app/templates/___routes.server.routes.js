@@ -10,11 +10,11 @@ module.exports = function(app) {
 <% } %>
 <% if (server_type == 'api' || server_type == 'both') { %>
     app.route('/api/<%= module_name %>')
-        .post( <%= module_name %>.<%= module_name %>Api );
+        .post( <%= module_name %>Api.<%= module_name %>Api );
 <% } %>
 <% if (server_type == 'route' || server_type == 'both') { %>
     app.route('/<%= module_name %>')
-        .get( <%= module_name %>.<%= module_name %>Ctrl );
+        .get( <%= module_name %>Route.<%= module_name %>Ctrl );
 <% } %>
 
 };
