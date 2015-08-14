@@ -91,23 +91,23 @@ module.exports = generators.Base.extend({
         // create client files
         if( this.moduleType === 'client' || this.moduleType === 'both' ){
             this.template(
-                '__module.client.module.js',
+                'client/_module.client.module.js',
                 'modules/' + this.moduleName + '/client/' + this.moduleName + '.client.module.js', context);
 
             this.template(
-                '__controller.client.controller.js',
+                'client/_controller.client.controller.js',
                 'modules/' + this.moduleName + '/client/controllers/' + this.moduleName + '.client.controller.js', context);
 
             this.template(
-                '__directive.client.directive.js',
+                'client/_directive.client.directive.js',
                 'modules/' + this.moduleName + '/client/directives/' + this.moduleName + '.client.directive.js', context);
 
             this.template(
-                '__view.client.view.html',
+                'client/_view.client.view.html',
                 'modules/' + this.moduleName + '/client/views/' + this.moduleName + '.client.view.html', context);
 
             this.template(
-                '__service.client.service.js',
+                'client/_service.client.service.js',
                 'modules/' + this.moduleName + '/client/services/' + this.moduleName + '.client.service.js', context);
         }
 
@@ -119,7 +119,7 @@ module.exports = generators.Base.extend({
             if( this.serverType === 'api' || this.serverType === 'both' ){
                 // if api
                 this.template(
-                    '___controller.server.controller.js',
+                    'server/_controller.server.controller.js',
                     'modules/' + this.moduleName + '/server/controllers/' + this.moduleName + '-api.server.controller.js', {
                         module_name: this.moduleName,
                         server_type: 'api'
@@ -131,20 +131,20 @@ module.exports = generators.Base.extend({
 
                 // if api
                 this.template(
-                    '___controller.server.controller.js',
+                    'server/_controller.server.controller.js',
                     'modules/' + this.moduleName + '/server/controllers/' + this.moduleName + '-route.server.controller.js', {
                         module_name: this.moduleName,
                         server_type: 'route'
                     });
 
                 this.template(
-                    '___view.server.view.html',
+                    'server/_view.server.view.html',
                     'modules/' + this.moduleName + '/server/views/' + this.moduleName + '.server.view.html', context);
             }
 
             // if route
             this.template(
-                '___routes.server.routes.js',
+                'server/_routes.server.routes.js',
                 'modules/' + this.moduleName + '/server/routes/' + this.moduleName + '.server.routes.js', context);
         }
     },
