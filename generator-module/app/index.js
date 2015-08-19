@@ -109,6 +109,10 @@ module.exports = generators.Base.extend({
             this.template(
                 'client/_service.client.service.js',
                 'modules/' + this.moduleName + '/client/services/' + this.moduleName + '.client.service.js', context);
+
+            this.template(
+                'client/_less.client.style.less',
+                'modules/' + this.moduleName + '/client/less/' + this.moduleName + '.client.style.less', context);
         }
 
 
