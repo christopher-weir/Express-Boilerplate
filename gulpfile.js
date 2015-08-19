@@ -49,7 +49,7 @@ gulp.task('watch', function() {
     gulp.watch(defaultAssets.server.allJS, ['jshint']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.client.views, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
     gulp.watch(defaultAssets.client.js, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.lessWatch, ['less']).on('change', plugins.livereload.changed);
+    gulp.watch(defaultAssets.client.less, ['less']).on('change', plugins.livereload.changed);
 });
 
 gulp.task('concact-html', function() {
@@ -122,19 +122,20 @@ gulp.task('uglify', function () {
 
 // CSS minifying task
 gulp.task('cssmin', function () {
-    return gulp.src(defaultAssets.client.css)
+    return gulp.src('./modules/core/client/less/app.less')
         .pipe(plugins.plumber())
+        .pipe(plugins.less())
         .pipe(plugins.cssmin())
-        .pipe(plugins.concat('application.min.css'))
-        .pipe(gulp.dest('public/dist'));
+        .pipe(plugins.rename('app.min.css'))
+        .pipe(gulp.dest('./public/dist'));
 });
 
 // Less task
 gulp.task('less', function () {
-    return gulp.src('./modules/core/client/less/site.less')
+    return gulp.src('./modules/core/client/less/app.less')
         .pipe(plugins.plumber())
         .pipe(plugins.less())
-        .pipe(plugins.rename('site.css'))
+        .pipe(plugins.rename('app.css'))
         .pipe(gulp.dest('./public/dist'));
 });
 

@@ -3,19 +3,16 @@
 module.exports = {
     client: {
         lib: {
-            css: [
-                'public/lib/bootstrap/dist/css/bootstrap.css',
-                'public/lib/bootstrap/dist/css/bootstrap-theme.css'
-            ],
+            css: [],
             js: [
                 'modules/core/lib/angular.min.js'
             ],
-            tests: ['public/lib/angular-mocks/angular-mocks.js']
+            tests: []
         },
         css: [
             'modules/*/client/css/*.css'
         ],
-        lessWatch: [
+        less: [
             'modules/*/client/less/*.less'
         ],
         coreJs: [
