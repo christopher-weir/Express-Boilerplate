@@ -88,7 +88,7 @@ module.exports.initMiddleware = function (app) {
  * Configure view engine
  */
 module.exports.initViewEngine = function (app) {
-    // Set swig as the template engine
+    // Set nunjucks as the template engine
     app.engine('server.view.html', consolidate[config.templateEngine]);
 
     // Set views path and view engine
