@@ -45,26 +45,93 @@ gulp.task('watch', function() {
     plugins.livereload.listen();
 
     // Add watch rules
-    gulp.watch(defaultAssets.server.views, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.server.allJS, ['jshint']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.views, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.js, ['concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify']).on('change', plugins.livereload.changed);
-    gulp.watch(defaultAssets.client.less, ['less']).on('change', plugins.livereload.changed);
+    // watch server views
+    gulp.watch(
+        defaultAssets.server.views,
+        [
+            'concact-html',
+            'jshint',
+            'buildLib',
+            'buildJs',
+            'uglify'
+        ]
+    ).on(
+        'change',
+        plugins.livereload.changed
+    );
+
+    // watch all server js
+    gulp.watch(
+        defaultAssets.server.allJS,
+        [
+            'jshint'
+        ]
+    ).on(
+        'change',
+        plugins.livereload.changed
+    );
+
+    // watch all client views
+    gulp.watch(
+        defaultAssets.client.views,
+        [
+            'concact-html',
+            'jshint',
+            'buildLib',
+            'buildJs',
+            'uglify'
+        ]
+    ).on(
+        'change',
+        plugins.livereload.changed
+    );
+
+    // watch all client js
+    gulp.watch(
+        defaultAssets.client.js,
+        [
+            'concact-html',
+            'jshint',
+            'buildLib',
+            'buildJs',
+            'uglify'
+        ]
+    ).on(
+        'change',
+        plugins.livereload.changed
+    );
+
+    // watch all client less
+    gulp.watch(
+        defaultAssets.client.less,
+        [
+            'less'
+        ]
+    ).on(
+        'change',
+        plugins.livereload.changed
+    );
 });
 
 gulp.task('concact-html', function() {
-    return gulp.src(defaultAssets.client.views)
-        .pipe(plugins.html2js({
-        outputModuleName: 'templates-main',
-        useStrict: true
-    }))
-    .pipe(plugins.concat('template.js'))
-    .pipe(gulp.dest('./.dist'));
+    return gulp
+        .src(defaultAssets.client.views)
+        .pipe(
+            plugins.html2js(
+                {
+                    outputModuleName: 'templates-main',
+                    useStrict: true
+                }
+            )
+        )
+        .pipe(plugins.concat('template.js'))
+        .pipe(gulp.dest('./.dist'));
 });
 
 // JS linting task
 gulp.task('jshint', function () {
-    return gulp.src(_.union(defaultAssets.server.allJS, defaultAssets.client.js ))
+    return gulp
+        .src(_.union(defaultAssets.server.allJS, defaultAssets.client.js ))
         .pipe(plugins.plumber())
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter('default'))
@@ -74,7 +141,8 @@ gulp.task('jshint', function () {
 
 // JS minifying task
 gulp.task('buildLib', function () {
-    return gulp.src(defaultAssets.client.lib.js)
+    return gulp
+        .src(defaultAssets.client.lib.js)
         .pipe(plugins.concat('lib.js'))
         .pipe(gulp.dest('./.dist'));
 });
@@ -82,7 +150,8 @@ gulp.task('buildLib', function () {
 
 // JS minifying task
 gulp.task('buildJs', function () {
-    return gulp.src(defaultAssets.client.js)
+    return gulp
+        .src(defaultAssets.client.js)
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.concat('application.js'))
         .pipe(gulp.dest('./.dist'));
@@ -93,13 +162,16 @@ gulp.task('buildJs', function () {
 gulp.task('uglify', function () {
 
     if( process.env.NODE_ENV === 'production' ){
-        return gulp.src([
-                './.dist/lib.js',
-                './modules/core/client/app/config.js',
-                './modules/core/client/app/init.js',
-                './.dist/application.js',
-                './.dist/template.js'
-            ])
+        return gulp
+            .src(
+                [
+                    './.dist/lib.js',
+                    './modules/core/client/app/config.js',
+                    './modules/core/client/app/init.js',
+                    './.dist/application.js',
+                    './.dist/template.js'
+                ]
+            )
             .pipe(plugins.ngAnnotate())
             .pipe(plugins.uglify({
                 mangle: false
@@ -107,13 +179,16 @@ gulp.task('uglify', function () {
             .pipe(plugins.concat('app.min.js'))
             .pipe(gulp.dest('public/js'));
     }else{
-        return gulp.src([
-                './.dist/lib.js',
-                './modules/core/client/app/config.js',
-                './modules/core/client/app/init.js',
-                './.dist/application.js',
-                './.dist/template.js'
-            ])
+        return gulp
+            .src(
+                [
+                    './.dist/lib.js',
+                    './modules/core/client/app/config.js',
+                    './modules/core/client/app/init.js',
+                    './.dist/application.js',
+                    './.dist/template.js'
+                ]
+            )
             .pipe(plugins.ngAnnotate())
             .pipe(plugins.concat('app.js'))
             .pipe(gulp.dest('public/js'));
@@ -122,7 +197,8 @@ gulp.task('uglify', function () {
 
 // CSS minifying task
 gulp.task('cssmin', function () {
-    return gulp.src('./modules/core/client/less/app.less')
+    return gulp
+        .src('./modules/core/client/less/app.less')
         .pipe(plugins.plumber())
         .pipe(plugins.less())
         .pipe(plugins.cssmin())
@@ -132,7 +208,8 @@ gulp.task('cssmin', function () {
 
 // Less task
 gulp.task('less', function () {
-    return gulp.src('./modules/core/client/less/app.less')
+    return gulp
+        .src('./modules/core/client/less/app.less')
         .pipe(plugins.plumber())
         .pipe(plugins.less())
         .pipe(plugins.rename('app.css'))
@@ -141,7 +218,8 @@ gulp.task('less', function () {
 
 // Karma test runner task
 gulp.task('karma', function (done) {
-    return gulp.src([])
+    return gulp
+        .src([])
         .pipe(plugins.karma({
             configFile: 'karma.conf.js',
             action: 'run',
@@ -154,26 +232,61 @@ gulp.task('karma', function (done) {
 
 
 // Lint CSS and JavaScript files.
-gulp.task('lint', function(done) {
-    runSequence('less', [ 'jshint'], done);
+gulp.task('lint', function( done ) {
+    runSequence(
+        'less',
+        [
+            'jshint'
+        ],
+        done
+    );
 });
 
 // Lint project files and minify them into two production files.
-gulp.task('build', function(done) {
+gulp.task('build', function( done ) {
     runSequence('env:dev' ,'lint', ['uglify', 'cssmin'], done);
 });
 
 // Run the project in debug mode
-gulp.task('debug', function(done) {
-    runSequence('env:dev', 'lint', ['nodemon', 'watch'], done);
+gulp.task('debug', function( done ) {
+    runSequence(
+        'env:dev',
+        'lint',
+        [
+            'nodemon',
+            'watch'
+        ],
+        done
+    );
 });
 
 // Run the project in production mode
-gulp.task('prod', function(done) {
-    runSequence('build', 'lint', ['nodemon', 'watch'], done);
+gulp.task('prod', function( done ) {
+    runSequence(
+        'build',
+        'lint',
+        [
+            'nodemon',
+            'watch'
+        ],
+        done
+    );
 });
 
 // Run the project in development mode
-gulp.task('default', function(done) {
-    runSequence('env:dev', 'concact-html', 'jshint', 'buildLib', 'buildJs', 'uglify', 'lint', ['nodemon', 'watch'], done);
+gulp.task('default', function( done ) {
+    runSequence(
+        'env:dev',
+        'concact-html',
+        'jshint',
+        'buildLib',
+        'buildJs',
+        'uglify',
+        'lint',
+        [
+            'nodemon',
+            'watch'
+        ],
+        done
+    );
 });
