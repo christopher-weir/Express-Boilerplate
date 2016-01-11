@@ -17,48 +17,27 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <!-- Fav Icon -->
-    <link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
-    {% if process.env.NODE_ENV === 'development' %}
-        <link rel="stylesheet" href="/css/app.css">
-    {% endif %}
-
-
-    {% if process.env.NODE_ENV === 'production' %}
-        <link rel="stylesheet" href="/css/app.min.css">
-    {% endif %}
-
-
-    <!-- HTML5 Shim -->
-    <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    {{#if  node_development}}
+    <link rel="stylesheet" href="/css/app.css">
+    {{else}}
+    <link rel="stylesheet" href="/css/app.min.css">
+    {{/if}}
 </head>
 
 <body class="ng-cloak" data-ng-controller="CoreCtrl">
 
-    <section class="content">
-            {% block content %}{% endblock %}
-    </section>
+    <main>
+        {{#block "main"}}
+        {{/block}}
+    </main>
 
-
-    {% if process.env.NODE_ENV === 'development' %}
-    <!--Livereload script rendered -->
+    {{#if node_development}}
     <script type="text/javascript" src="/js/app.js"></script>
-    {% endif %}
-
-
-    {% if process.env.NODE_ENV === 'production' %}
-    <!--Livereload script rendered -->
-    <script type="text/javascript" src="/js/app.min.js"></script>
-    {% endif %}
-
-
-
-    {% if process.env.NODE_ENV === 'development' %}
-    <!--Livereload script rendered -->
     <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
-    {% endif %}
+    {{else}}
+    <script type="text/javascript" src="/js/app.min.js"></script>
+    {{/if}}
 
 </body>
 
