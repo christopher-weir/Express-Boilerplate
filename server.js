@@ -6,7 +6,6 @@
 var config      = require('./config/config');
 var express     = require('./config/lib/express');
 var cluster     = require('express-cluster');
-var nunjucks    = require('nunjucks');
 
 cluster(function(worker) {
     // Initialize express

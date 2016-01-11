@@ -6,7 +6,7 @@ module.exports = {
         description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js'
     },
     port: process.env.PORT || 3000,
-    templateEngine: 'nunjucks',
+    templateEngine: 'handlebars',
     sessionSecret: 'ExpressBoilerplate',
     sessionCollection: 'sessions'
 };
