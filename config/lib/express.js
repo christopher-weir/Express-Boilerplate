@@ -3,18 +3,21 @@
 /**
  * Module dependencies.
  */
-var config = require('../config');
-var express = require('express');
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
-var multer = require('multer');
-var favicon = require('serve-favicon');
-var compress = require('compression');
-var methodOverride = require('method-override');
-var cookieParser = require('cookie-parser');
-var helmet = require('helmet');
-var consolidate = require('consolidate');
-var path = require('path');
+var config          = require('../config');
+var express         = require('express');
+var morgan          = require('morgan');
+var bodyParser      = require('body-parser');
+var multer          = require('multer');
+var favicon         = require('serve-favicon');
+var compress        = require('compression');
+var methodOverride  = require('method-override');
+var cookieParser    = require('cookie-parser');
+var helmet          = require('helmet');
+var consolidate     = require('consolidate');
+var path            = require('path');
+var fs              = require('fs');
+var handlebars      = require('handlebars');
+var layouts         = require('handlebars-layouts');
 
 /**
  * Initialize local variables
@@ -88,7 +91,34 @@ module.exports.initMiddleware = function (app) {
  * Configure view engine
  */
 module.exports.initViewEngine = function (app) {
-    // Set nunjucks as the template engine
+
+
+    handlebars.registerHelper(layouts(handlebars));
+    handlebars.registerPartial('layout', fs.readFileSync('modules/core/server/views/layout.server.view.html', 'utf8'));
+
+    handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+        switch (operator) {
+            case '===':
+                return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            case '<':
+                return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            case '<=':
+                return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            case '>':
+                return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            case '>=':
+                return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            case '&&':
+                return (v1 && v2) ? options.fn(this) : options.inverse(this);
+            case '||':
+                return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            default:
+                return options.inverse(this);
+        }
+    });
+
+
     app.engine('server.view.html', consolidate[config.templateEngine]);
 
     // Set views path and view engine
