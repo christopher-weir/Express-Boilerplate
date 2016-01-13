@@ -24,16 +24,18 @@ var layouts         = require('handlebars-layouts');
  */
 module.exports.initLocalVariables = function (app) {
     // Setting application local variables
-    app.locals.title = config.app.title;
-    app.locals.description = config.app.description;
-    app.locals.jsFiles = config.files.client.js;
-    app.locals.cssFiles = config.files.client.css;
+    app.locals.title        = config.app.title;
+    app.locals.description  = config.app.description;
+    app.locals.jsFiles      = config.files.client.js;
+    app.locals.cssFiles     = config.files.client.css;
 
     if( process.env.NODE_ENV === 'production' ){
-        app.locals.node_development = true;
+        app.locals.node_production = true;
     }else{
-        app.locals.node_development = false;
+        app.locals.node_production = false;
     }
+
+    console.log(process.env.NODE_ENV);
 
     // Passing the request url to environment locals
     app.use(function (req, res, next) {
