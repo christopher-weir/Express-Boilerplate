@@ -35,8 +35,6 @@ module.exports.initLocalVariables = function (app) {
         app.locals.node_production = false;
     }
 
-    console.log(process.env.NODE_ENV);
-
     // Passing the request url to environment locals
     app.use(function (req, res, next) {
         res.locals.host = req.protocol + '://' + req.hostname;
