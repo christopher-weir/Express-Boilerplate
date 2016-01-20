@@ -28,6 +28,35 @@ c=m+o(s,g),v+=u(s,c,n,r);else{var y=p(e);if(y){var C,b=y.call(e);if(y!==e.entrie
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e(require("react"));else if("function"==typeof define&&define.amd)define(["react"],e);else{var f;f="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,f.ReactDOM=e(f.React)}}(function(e){return e.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED});
 'use strict';
 
+var Timer = React.createClass({
+  displayName: 'Timer',
+
+  getInitialState: function getInitialState() {
+    return { secondsElapsed: 0 };
+  },
+  tick: function tick() {
+    this.setState({ secondsElapsed: this.state.secondsElapsed + 1 });
+  },
+  componentDidMount: function componentDidMount() {
+    this.interval = setInterval(this.tick, 1000);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    clearInterval(this.interval);
+  },
+  render: function render() {
+    return React.createElement(
+      'div',
+      null,
+      'Seconds Elapsed: ',
+      this.state.secondsElapsed
+    );
+  }
+});
+
+ReactDOM.render(React.createElement(Timer, null), document.getElementById('exampletime'));
+
+'use strict';
+
 var HelloMessage = React.createClass({
     displayName: 'HelloMessage',
 
