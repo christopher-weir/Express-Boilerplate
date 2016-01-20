@@ -5,7 +5,8 @@ module.exports = {
         lib: {
             css: [],
             js: [
-                'modules/core/lib/angular.min.js'
+                'node_modules/react/dist/react.min.js',
+                'node_modules/react-dom/dist/react-dom.min.js'
             ],
             tests: []
         },
@@ -15,16 +16,9 @@ module.exports = {
         less: [
             'modules/*/client/less/*.less'
         ],
-        coreJs: [
-            'modules/core/client/app/config.js',
-            'modules/core/client/app/init.js'
-        ],
         js: [
             'modules/*/client/*.js',
             'modules/*/client/!(app)/*.js'
-        ],
-        runJs: [
-            'public/dist/application.js'
         ],
         views: ['modules/*/client/views/**/*.html']
     },

@@ -49,7 +49,6 @@ gulp.task('watch', function() {
     gulp.watch(
         defaultAssets.server.views,
         [
-            'concact-html',
             'jshint',
             'buildLib',
             'buildJs',
@@ -75,7 +74,6 @@ gulp.task('watch', function() {
     gulp.watch(
         defaultAssets.client.views,
         [
-            'concact-html',
             'jshint',
             'buildLib',
             'buildJs',
@@ -90,7 +88,6 @@ gulp.task('watch', function() {
     gulp.watch(
         defaultAssets.client.js,
         [
-            'concact-html',
             'jshint',
             'buildLib',
             'buildJs',
@@ -113,20 +110,20 @@ gulp.task('watch', function() {
     );
 });
 
-gulp.task('concact-html', function() {
-    return gulp
-        .src(defaultAssets.client.views)
-        .pipe(
-            plugins.html2js(
-                {
-                    outputModuleName: 'templates-main',
-                    useStrict: true
-                }
-            )
-        )
-        .pipe(plugins.concat('template.js'))
-        .pipe(gulp.dest('./.dist'));
-});
+// gulp.task('concact-html', function() {
+//     return gulp
+//         .src(defaultAssets.client.views)
+//         .pipe(
+//             plugins.html2js(
+//                 {
+//                     outputModuleName: 'templates-main',
+//                     useStrict: true
+//                 }
+//             )
+//         )
+//         .pipe(plugins.concat('template.js'))
+//         .pipe(gulp.dest('./.dist'));
+// });
 
 // JS linting task
 gulp.task('jshint', function () {
@@ -168,8 +165,7 @@ gulp.task('uglify', function () {
                     './.dist/lib.js',
                     './modules/core/client/app/config.js',
                     './modules/core/client/app/init.js',
-                    './.dist/application.js',
-                    './.dist/template.js'
+                    './.dist/application.js'
                 ]
             )
             .pipe(plugins.ngAnnotate())
@@ -185,8 +181,7 @@ gulp.task('uglify', function () {
                     './.dist/lib.js',
                     './modules/core/client/app/config.js',
                     './modules/core/client/app/init.js',
-                    './.dist/application.js',
-                    './.dist/template.js'
+                    './.dist/application.js'
                 ]
             )
             .pipe(plugins.ngAnnotate())
@@ -277,7 +272,6 @@ gulp.task('prod', function( done ) {
 gulp.task('default', function( done ) {
     runSequence(
         'env:dev',
-        'concact-html',
         'jshint',
         'buildLib',
         'buildJs',
