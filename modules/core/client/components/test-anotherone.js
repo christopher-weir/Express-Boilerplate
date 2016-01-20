@@ -1,28 +1,23 @@
 'use strict';
 
 var Timer = React.createClass({
-  displayName: 'Timer',
-
-  getInitialState: function getInitialState() {
-    return { secondsElapsed: 0 };
+  getInitialState: function() {
+    return {secondsElapsed: 0};
   },
-  tick: function tick() {
-    this.setState({ secondsElapsed: this.state.secondsElapsed + 1 });
+  tick: function() {
+    this.setState({secondsElapsed: this.state.secondsElapsed + 1});
   },
-  componentDidMount: function componentDidMount() {
+  componentDidMount: function() {
     this.interval = setInterval(this.tick, 1000);
   },
-  componentWillUnmount: function componentWillUnmount() {
+  componentWillUnmount: function() {
     clearInterval(this.interval);
   },
-  render: function render() {
-    return React.createElement(
-      'div',
-      null,
-      'Seconds Elapsed: ',
-      this.state.secondsElapsed
+  render: function() {
+    return (
+      <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
     );
   }
 });
 
-ReactDOM.render(React.createElement(Timer, null), document.getElementById('exampletime'));
+ReactDOM.render(<Timer />, document.getElementById('exampletime'));
