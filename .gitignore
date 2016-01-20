@@ -27,3 +27,5 @@ build/Release
 node_modules
 .DS_Store
 express-boilerplate.sublime-workspace
+public/js/app.js
+.dist/application.js
