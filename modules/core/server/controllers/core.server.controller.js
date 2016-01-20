@@ -1,5 +1,11 @@
 'use strict';
-
+var React = require('react');
+var ReactDOM = require('react-dom/server');
+//
+// var HelloMessagea = require('../../shared/test.js');
+//
+// var HelloMessage = React.createFactory(HelloMessagea);
+// console.log(HelloMessage);
 /**
  * Render the main applicaion page
  */
