@@ -61,15 +61,15 @@ gulp.task('watch', function() {
     );
 
     // watch all server js
-    gulp.watch(
-        defaultAssets.server.allJS,
-        [
-            //'jshint'
-        ]
-    ).on(
-        'change',
-        plugins.livereload.changed
-    );
+    // gulp.watch(
+    //     defaultAssets.server.allJS,
+    //     [
+    //         //'jshint'
+    //     ]
+    // ).on(
+    //     'change',
+    //     plugins.livereload.changed
+    // );
 
     // watch all client views
     gulp.watch(

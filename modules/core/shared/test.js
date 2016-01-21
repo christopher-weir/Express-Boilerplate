@@ -1,4 +1,6 @@
 'use strict';
+var React = require('react');
+var ReactDOM = require('react-dom/server');
 /**
  * Render the main applicaion page
  */
@@ -13,3 +15,17 @@
 //  });
 //
 // module.exports = HelloMessage;
+
+var helloMessage = React.createClass({
+  displayName: 'HelloMessage',
+
+  render: function render() {
+    return React.createElement(
+      'div',
+      null,
+      'Hello new rrawecccfweaf'
+    );
+  }
+});
+
+module.exports = ReactDOM.renderToString(React.createElement(helloMessage));
