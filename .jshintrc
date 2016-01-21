@@ -21,6 +21,8 @@
     "globals": { // Globals variables.
         "jasmine": true,
         "angular": true,
+        "React": true,
+        "ReactDOM": true,
         "ApplicationConfiguration": true,
         "skrollr": true,
         "$" : true

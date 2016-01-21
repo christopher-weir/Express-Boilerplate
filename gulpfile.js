@@ -11,6 +11,7 @@ var gulp            = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins');
 var runSequence     = require('run-sequence');
 var plugins         = gulpLoadPlugins();
+var babel           = require('gulp-babel');
 
 // Set NODE_ENV to 'test'
 gulp.task('env:test', function () {
@@ -49,8 +50,7 @@ gulp.task('watch', function() {
     gulp.watch(
         defaultAssets.server.views,
         [
-            'concact-html',
-            'jshint',
+            //'jshint',
             'buildLib',
             'buildJs',
             'uglify'
@@ -61,22 +61,21 @@ gulp.task('watch', function() {
     );
 
     // watch all server js
-    gulp.watch(
-        defaultAssets.server.allJS,
-        [
-            'jshint'
-        ]
-    ).on(
-        'change',
-        plugins.livereload.changed
-    );
+    // gulp.watch(
+    //     defaultAssets.server.allJS,
+    //     [
+    //         //'jshint'
+    //     ]
+    // ).on(
+    //     'change',
+    //     plugins.livereload.changed
+    // );
 
     // watch all client views
     gulp.watch(
         defaultAssets.client.views,
         [
-            'concact-html',
-            'jshint',
+            //'jshint',
             'buildLib',
             'buildJs',
             'uglify'
@@ -90,8 +89,7 @@ gulp.task('watch', function() {
     gulp.watch(
         defaultAssets.client.js,
         [
-            'concact-html',
-            'jshint',
+            //'jshint',
             'buildLib',
             'buildJs',
             'uglify'
@@ -113,30 +111,30 @@ gulp.task('watch', function() {
     );
 });
 
-gulp.task('concact-html', function() {
-    return gulp
-        .src(defaultAssets.client.views)
-        .pipe(
-            plugins.html2js(
-                {
-                    outputModuleName: 'templates-main',
-                    useStrict: true
-                }
-            )
-        )
-        .pipe(plugins.concat('template.js'))
-        .pipe(gulp.dest('./.dist'));
-});
+// gulp.task('concact-html', function() {
+//     return gulp
+//         .src(defaultAssets.client.views)
+//         .pipe(
+//             plugins.html2js(
+//                 {
+//                     outputModuleName: 'templates-main',
+//                     useStrict: true
+//                 }
+//             )
+//         )
+//         .pipe(plugins.concat('template.js'))
+//         .pipe(gulp.dest('./.dist'));
+// });
 
 // JS linting task
-gulp.task('jshint', function () {
-    return gulp
-        .src(_.union(defaultAssets.server.allJS, defaultAssets.client.js ))
-        .pipe(plugins.plumber())
-        .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('default'))
-        .pipe(plugins.jshint.reporter('fail'));
-});
+// gulp.task('jshint', function () {
+//     return gulp
+//         .src(_.union(defaultAssets.server.allJS, defaultAssets.client.js ))
+//         .pipe(plugins.plumber())
+//         .pipe(plugins.jshint())
+//         .pipe(plugins.jshint.reporter('default'))
+//         .pipe(plugins.jshint.reporter('fail'));
+// });
 
 
 // JS minifying task
@@ -152,7 +150,15 @@ gulp.task('buildLib', function () {
 gulp.task('buildJs', function () {
     return gulp
         .src(defaultAssets.client.js)
-        .pipe(plugins.ngAnnotate())
+        .pipe(babel(
+            {
+                presets: ['react'],
+                only: [
+                    'modules/core/client/components',
+                ],
+                compact: false
+            }
+        ))
         .pipe(plugins.concat('application.js'))
         .pipe(gulp.dest('./.dist'));
 });
@@ -168,11 +174,9 @@ gulp.task('uglify', function () {
                     './.dist/lib.js',
                     './modules/core/client/app/config.js',
                     './modules/core/client/app/init.js',
-                    './.dist/application.js',
-                    './.dist/template.js'
+                    './.dist/application.js'
                 ]
             )
-            .pipe(plugins.ngAnnotate())
             .pipe(plugins.uglify({
                 mangle: false
             }))
@@ -185,11 +189,9 @@ gulp.task('uglify', function () {
                     './.dist/lib.js',
                     './modules/core/client/app/config.js',
                     './modules/core/client/app/init.js',
-                    './.dist/application.js',
-                    './.dist/template.js'
+                    './.dist/application.js'
                 ]
             )
-            .pipe(plugins.ngAnnotate())
             .pipe(plugins.concat('app.js'))
             .pipe(gulp.dest('public/js'));
     }
@@ -235,9 +237,9 @@ gulp.task('karma', function (done) {
 gulp.task('lint', function( done ) {
     runSequence(
         'less',
-        [
-            'jshint'
-        ],
+        // [
+        //     'jshint'
+        // ],
         done
     );
 });
@@ -277,8 +279,7 @@ gulp.task('prod', function( done ) {
 gulp.task('default', function( done ) {
     runSequence(
         'env:dev',
-        'concact-html',
-        'jshint',
+    // 'jshint',
         'buildLib',
         'buildJs',
         'uglify',
