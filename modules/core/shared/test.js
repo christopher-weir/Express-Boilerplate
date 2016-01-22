@@ -1,31 +1,24 @@
 'use strict';
 var React = require('react');
-var ReactDOM = require('react-dom/server');
-/**
- * Render the main applicaion page
- */
-//  var HelloMessage = React.createClass({
-//    handleClick: function () {
-//      alert('You clicked!');
-//    },
-//
-//    render: function() {
-//      return <div onClick={this.handleClick}>Hello {this.props.name}</div>;
-//    }
-//  });
-//
-// module.exports = HelloMessage;
 
 var helloMessage = React.createClass({
-  displayName: 'HelloMessage',
-
-  render: function render() {
-    return React.createElement(
-      'div',
-      null,
-      'Hello new rrawecccfweaf'
+  getInitialState: function() {
+    return {secondsElapsed: 0};
+  },
+  tick: function() {
+    this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+  },
+  componentDidMount: function() {
+    this.interval = setInterval(this.tick, 1000);
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
+  },
+  render: function() {
+    return (
+      <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
     );
   }
 });
 
-module.exports = ReactDOM.renderToString(React.createElement(helloMessage));
+module.exports = helloMessage;
