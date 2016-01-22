@@ -17,8 +17,8 @@ module.exports = {
             'modules/*/client/less/*.less'
         ],
         js: [
-            'modules/*/client/*.js',
-            'modules/*/client/!(app)/*.js'
+            'modules/*/client/components/*.js',
+            'modules/*/client/module.components.js'
         ],
         views: ['modules/*/client/views/**/*.html']
     },
