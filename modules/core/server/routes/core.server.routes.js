@@ -9,9 +9,4 @@ module.exports = function(app) {
         .get(
             core.renderIndexPage
         );
-
-    app.route('/testc')
-        .get(
-            core.renderTestComponentPage
-        );
 };
