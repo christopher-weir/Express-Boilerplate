@@ -276,10 +276,10 @@ gulp.task('prod', function( done ) {
 });
 
 gulp.task('webpack', function() {
-  return gulp.src(defaultAssets.shared.react)
+  return gulp.src(defaultAssets.client.js)
     .pipe(plugins.webpack({
       output: {
-        filename: 'apps.js',
+        filename: 'app.js',
       },
       module: {
         loaders: [
@@ -301,14 +301,14 @@ gulp.task('default', function( done ) {
     runSequence(
         'env:dev',
     // 'jshint',
-        'buildLib',
-        'buildJs',
+        // 'buildLib',
+        // 'buildJs',
         'webpack',
-        'uglify',
+        // 'uglify',
         'lint',
         [
             'nodemon',
-            'watch'
+            // 'watch'
         ],
         done
     );
