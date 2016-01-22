@@ -29,3 +29,4 @@ node_modules
 express-boilerplate.sublime-workspace
 public/js/app.js
 .dist/application.js
+public/js/apps.js
