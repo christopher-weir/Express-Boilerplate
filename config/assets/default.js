@@ -29,5 +29,11 @@ module.exports = {
         config: 'modules/*/server/config/*.js',
         policies: 'modules/*/server/policies/*.js',
         views: 'modules/*/server/views/*.html'
+    },
+    shared: {
+        react: [
+            'modules/*/shared/!(core.shared.module).js',
+            'modules/*/shared/core.shared.module.js'
+        ]
     }
 };
