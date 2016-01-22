@@ -275,6 +275,27 @@ gulp.task('prod', function( done ) {
     );
 });
 
+gulp.task('webpack', function() {
+  return gulp.src(defaultAssets.shared.react)
+    .pipe(plugins.webpack({
+      output: {
+        filename: 'apps.js',
+      },
+      module: {
+        loaders: [
+            {
+                test: /\.jsx?$/,
+                loader: 'babel-loader',
+                query: {
+                  presets: ['react', 'es2015']
+                }
+            }
+          ]
+        }
+    }))
+    .pipe(gulp.dest('public/js'));
+});
+
 // Run the project in development mode
 gulp.task('default', function( done ) {
     runSequence(
@@ -282,6 +303,7 @@ gulp.task('default', function( done ) {
     // 'jshint',
         'buildLib',
         'buildJs',
+        'webpack',
         'uglify',
         'lint',
         [
