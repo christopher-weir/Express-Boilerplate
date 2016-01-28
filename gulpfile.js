@@ -36,7 +36,13 @@ gulp.task('nodemon', function() {
         script: 'server.js',
         nodeArgs: ['--debug'],
         ext: 'js,html',
-        watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
+        watch: _.union(
+            defaultAssets.server.views,
+            defaultAssets.server.allJS,
+            defaultAssets.server.config,
+            defaultAssets.client.js,
+            defaultAssets.client.sass
+        )
     });
 });
 
@@ -48,17 +54,17 @@ gulp.task('watch', function() {
 
     // Add watch rules
     // watch server views
-    gulp.watch(
-        defaultAssets.server.views, [
-            //'jshint',
-            'buildLib',
-            'buildJs',
-            'uglify'
-        ]
-    ).on(
-        'change',
-        plugins.livereload.changed
-    );
+    // gulp.watch(
+    //     defaultAssets.server.views, [
+    //         //'jshint',
+    //         'buildLib',
+    //         'buildJs',
+    //         'uglify'
+    //     ]
+    // ).on(
+    //     'change',
+    //     plugins.livereload.changed
+    // );
 
     // watch all server js
     // gulp.watch(
@@ -72,29 +78,23 @@ gulp.task('watch', function() {
     // );
 
     // watch all client views
-    gulp.watch(
-        defaultAssets.client.views, [
-            //'jshint',
-            'buildLib',
-            'buildJs',
-            'uglify'
-        ]
-    ).on(
-        'change',
-        plugins.livereload.changed
-    );
-
-    // watch all client js
+    // gulp.watch(
+    //     defaultAssets.client.views, [
+    //         //'jshint',
+    //         'buildLib',
+    //         'buildJs',
+    //         'uglify'
+    //     ]
+    // ).on(
+    //     'change',
+    //     plugins.livereload.changed
+    // );
+    //
+    // // watch all client js
     gulp.watch(
         defaultAssets.client.js, [
-            //'jshint',
-            'buildLib',
-            'buildJs',
-            'uglify'
+            'webpack'
         ]
-    ).on(
-        'change',
-        plugins.livereload.changed
     );
 
     // watch all client sass
@@ -102,9 +102,6 @@ gulp.task('watch', function() {
         defaultAssets.client.sass, [
             'sass'
         ]
-    ).on(
-        'change',
-        plugins.livereload.changed
     );
 });
 
@@ -275,6 +272,10 @@ gulp.task('webpack', function() {
             output: {
                 filename: 'app.js',
             },
+            externals: {
+                'react': 'React',
+                'react-dom': 'ReactDOM'
+            },
             module: {
                 loaders: [{
                     test: /\.jsx?$/,
@@ -299,7 +300,7 @@ gulp.task('default', function(done) {
         // 'uglify',
         'lint', [
             'nodemon',
-            // 'watch'
+            'watch'
         ],
         done
     );

@@ -101,6 +101,7 @@ module.exports.initViewEngine = function (app) {
 
     handlebars.registerHelper(layouts(handlebars));
     handlebars.registerPartial('layout', fs.readFileSync('modules/core/server/views/layout.server.view.html', 'utf8'));
+    handlebars.registerPartial('navbar', fs.readFileSync('modules/core/server/views/navigation.server.view.html', 'utf8'));
 
     handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
