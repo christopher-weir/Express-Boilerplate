@@ -13,8 +13,9 @@ module.exports = {
         css: [
             'modules/*/client/css/*.css'
         ],
-        less: [
-            'modules/*/client/less/*.less'
+        sass: [
+            'modules/*/client/sass/*/*.sass',
+            'modules/*/client/sass/*.sass'
         ],
         js: [
             'modules/*/client/components/*.js',

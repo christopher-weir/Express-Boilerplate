@@ -5,32 +5,33 @@
 /**
  * Module dependencies.
  */
-var _               = require('lodash');
-var defaultAssets   = require('./config/assets/default');
-var gulp            = require('gulp');
+var _ = require('lodash');
+var defaultAssets = require('./config/assets/default');
+var gulp = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins');
-var runSequence     = require('run-sequence');
-var plugins         = gulpLoadPlugins();
-var babel           = require('gulp-babel');
+var runSequence = require('run-sequence');
+var plugins = gulpLoadPlugins();
+var babel = require('gulp-babel');
+var webpack = require('webpack-stream');
 
 // Set NODE_ENV to 'test'
-gulp.task('env:test', function () {
+gulp.task('env:test', function() {
     process.env.NODE_ENV = 'test';
 });
 
 // Set NODE_ENV to 'development'
-gulp.task('env:dev', function () {
+gulp.task('env:dev', function() {
     process.env.NODE_ENV = 'development';
 });
 
 // Set NODE_ENV to 'production'
-gulp.task('env:prod', function () {
+gulp.task('env:prod', function() {
     process.env.NODE_ENV = 'production';
 });
 
 
 // Nodemon task
-gulp.task('nodemon', function () {
+gulp.task('nodemon', function() {
     return plugins.nodemon({
         script: 'server.js',
         nodeArgs: ['--debug'],
@@ -48,8 +49,7 @@ gulp.task('watch', function() {
     // Add watch rules
     // watch server views
     gulp.watch(
-        defaultAssets.server.views,
-        [
+        defaultAssets.server.views, [
             //'jshint',
             'buildLib',
             'buildJs',
@@ -73,8 +73,7 @@ gulp.task('watch', function() {
 
     // watch all client views
     gulp.watch(
-        defaultAssets.client.views,
-        [
+        defaultAssets.client.views, [
             //'jshint',
             'buildLib',
             'buildJs',
@@ -87,8 +86,7 @@ gulp.task('watch', function() {
 
     // watch all client js
     gulp.watch(
-        defaultAssets.client.js,
-        [
+        defaultAssets.client.js, [
             //'jshint',
             'buildLib',
             'buildJs',
@@ -99,11 +97,10 @@ gulp.task('watch', function() {
         plugins.livereload.changed
     );
 
-    // watch all client less
+    // watch all client sass
     gulp.watch(
-        defaultAssets.client.less,
-        [
-            'less'
+        defaultAssets.client.sass, [
+            'sass'
         ]
     ).on(
         'change',
@@ -138,7 +135,7 @@ gulp.task('watch', function() {
 
 
 // JS minifying task
-gulp.task('buildLib', function () {
+gulp.task('buildLib', function() {
     return gulp
         .src(defaultAssets.client.lib.js)
         .pipe(plugins.concat('lib.js'))
@@ -147,27 +144,25 @@ gulp.task('buildLib', function () {
 
 
 // JS minifying task
-gulp.task('buildJs', function () {
+gulp.task('buildJs', function() {
     return gulp
         .src(defaultAssets.client.js)
-        .pipe(babel(
-            {
-                presets: ['react'],
-                only: [
-                    'modules/core/client/components',
-                ],
-                compact: false
-            }
-        ))
+        .pipe(babel({
+            presets: ['react'],
+            only: [
+                'modules/core/client/components',
+            ],
+            compact: false
+        }))
         .pipe(plugins.concat('application.js'))
         .pipe(gulp.dest('./.dist'));
 });
 
 
 // JS minifying task
-gulp.task('uglify', function () {
+gulp.task('uglify', function() {
 
-    if( process.env.NODE_ENV === 'production' ){
+    if (process.env.NODE_ENV === 'production') {
         return gulp
             .src(
                 [
@@ -182,7 +177,7 @@ gulp.task('uglify', function () {
             }))
             .pipe(plugins.concat('app.min.js'))
             .pipe(gulp.dest('public/js'));
-    }else{
+    } else {
         return gulp
             .src(
                 [
@@ -198,28 +193,28 @@ gulp.task('uglify', function () {
 });
 
 // CSS minifying task
-gulp.task('cssmin', function () {
+gulp.task('cssmin', function() {
     return gulp
-        .src('./modules/core/client/less/app.less')
+        .src('./modules/core/client/sass/app.sass')
         .pipe(plugins.plumber())
-        .pipe(plugins.less())
+        .pipe(plugins.sass())
         .pipe(plugins.cssmin())
         .pipe(plugins.rename('app.min.css'))
-        .pipe(gulp.dest('./public/dist'));
+        .pipe(gulp.dest('./public/css'));
 });
 
-// Less task
-gulp.task('less', function () {
+// sass task
+gulp.task('sass', function() {
     return gulp
-        .src('./modules/core/client/less/app.less')
+        .src('./modules/core/client/sass/app.sass')
         .pipe(plugins.plumber())
-        .pipe(plugins.less())
+        .pipe(plugins.sass())
         .pipe(plugins.rename('app.css'))
-        .pipe(gulp.dest('./public/dist'));
+        .pipe(gulp.dest('./public/css'));
 });
 
 // Karma test runner task
-gulp.task('karma', function (done) {
+gulp.task('karma', function(done) {
     return gulp
         .src([])
         .pipe(plugins.karma({
@@ -234,9 +229,9 @@ gulp.task('karma', function (done) {
 
 
 // Lint CSS and JavaScript files.
-gulp.task('lint', function( done ) {
+gulp.task('lint', function(done) {
     runSequence(
-        'less',
+        'sass',
         // [
         //     'jshint'
         // ],
@@ -245,16 +240,15 @@ gulp.task('lint', function( done ) {
 });
 
 // Lint project files and minify them into two production files.
-gulp.task('build', function( done ) {
-    runSequence('env:dev' ,'lint', ['uglify', 'cssmin'], done);
+gulp.task('build', function(done) {
+    runSequence('env:dev', 'lint', ['uglify', 'cssmin'], done);
 });
 
 // Run the project in debug mode
-gulp.task('debug', function( done ) {
+gulp.task('debug', function(done) {
     runSequence(
         'env:dev',
-        'lint',
-        [
+        'lint', [
             'nodemon',
             'watch'
         ],
@@ -263,11 +257,10 @@ gulp.task('debug', function( done ) {
 });
 
 // Run the project in production mode
-gulp.task('prod', function( done ) {
+gulp.task('prod', function(done) {
     runSequence(
         'build',
-        'lint',
-        [
+        'lint', [
             'nodemon',
             'watch'
         ],
@@ -276,37 +269,35 @@ gulp.task('prod', function( done ) {
 });
 
 gulp.task('webpack', function() {
-  return gulp.src(defaultAssets.client.js)
-    .pipe(plugins.webpack({
-      output: {
-        filename: 'app.js',
-      },
-      module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                loader: 'babel-loader',
-                query: {
-                  presets: ['react', 'es2015']
-                }
+
+    return gulp.src(defaultAssets.client.js)
+        .pipe(webpack({
+            output: {
+                filename: 'app.js',
+            },
+            module: {
+                loaders: [{
+                    test: /\.jsx?$/,
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['react', 'es2015']
+                    }
+                }]
             }
-          ]
-        }
-    }))
-    .pipe(gulp.dest('public/js'));
+        }))
+        .pipe(gulp.dest('public/js'));
 });
 
 // Run the project in development mode
-gulp.task('default', function( done ) {
+gulp.task('default', function(done) {
     runSequence(
         'env:dev',
-    // 'jshint',
+        // 'jshint',
         // 'buildLib',
         // 'buildJs',
         'webpack',
         // 'uglify',
-        'lint',
-        [
+        'lint', [
             'nodemon',
             // 'watch'
         ],
