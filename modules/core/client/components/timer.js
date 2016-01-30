@@ -23,4 +23,17 @@ var Timer = React.createClass({
   }
 });
 
-module.exports = Timer;
+
+
+
+if( process.env.NODE_ENV ){
+
+    module.exports = React.createElement(Timer);
+
+}else{
+
+    var elm = document.getElementById('timer');
+    if (elm) {
+        ReactDOM.render(React.createElement(Timer), elm);
+    }
+}
