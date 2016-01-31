@@ -12,9 +12,9 @@ cluster(function(worker) {
     // Initialize express
     var app = express.init();
 
-    // Start the app by listening on <port>
-    app.listen(config.port);
-
     // Logging initialization
     console.log('Application started on port ' + config.port);
+
+    // Start the app by listening on <port>
+    return app.listen(config.port);
 });
