@@ -65,15 +65,12 @@ gulp.task('watch', function() {
     // );
 
     // watch all server js
-    // gulp.watch(
-    //     defaultAssets.server.allJS,
-    //     [
-    //         //'jshint'
-    //     ]
-    // ).on(
-    //     'change',
-    //     plugins.livereload.changed
-    // );
+    gulp.watch(
+        defaultAssets.server.allJS,
+        [
+            'eslint'
+        ]
+    );
 
     // watch all client views
     // gulp.watch(
@@ -91,6 +88,7 @@ gulp.task('watch', function() {
     // // watch all client js
     gulp.watch(
         defaultAssets.client.js, [
+            'eslint',
             'webpack'
         ]
     );
@@ -102,31 +100,6 @@ gulp.task('watch', function() {
         ]
     );
 });
-
-// gulp.task('concact-html', function() {
-//     return gulp
-//         .src(defaultAssets.client.views)
-//         .pipe(
-//             plugins.html2js(
-//                 {
-//                     outputModuleName: 'templates-main',
-//                     useStrict: true
-//                 }
-//             )
-//         )
-//         .pipe(plugins.concat('template.js'))
-//         .pipe(gulp.dest('./.dist'));
-// });
-
-// JS linting task
-// gulp.task('jshint', function () {
-//     return gulp
-//         .src(_.union(defaultAssets.server.allJS, defaultAssets.client.js ))
-//         .pipe(plugins.plumber())
-//         .pipe(plugins.jshint())
-//         .pipe(plugins.jshint.reporter('default'))
-//         .pipe(plugins.jshint.reporter('fail'));
-// });
 
 
 // JS minifying task
@@ -145,7 +118,7 @@ gulp.task('buildJs', function() {
         .pipe(babel({
             presets: ['react'],
             only: [
-                'modules/core/client/components',
+                'modules/core/client/components'
             ],
             compact: false
         }))
@@ -185,6 +158,61 @@ gulp.task('uglify', function() {
             .pipe(plugins.concat('app.js'))
             .pipe(gulp.dest('public/js'));
     }
+});
+
+
+// JS linting task
+gulp.task('eslint', function() {
+    return gulp
+        .src(_.union(defaultAssets.server.allJS, defaultAssets.client.js))
+        .pipe(plugins.eslint({
+            // gulp-eslint's config works much like .eslintrc with a dash of ESLint's CLI
+
+            'extends': 'eslint:recommended',
+
+            'ecmaFeatures': {
+                'modules': false,
+                'jsx': true
+            },
+
+            'rules': {
+                'no-alert': 0,
+                'no-bitwise': 0,
+                'camelcase': 1,
+                'curly': 1,
+                'no-console': 0,
+                'eqeqeq': 0,
+                'no-eq-null': 0,
+                'guard-for-in': 1,
+                'no-empty': 1,
+                'no-use-before-define': 0,
+                'no-obj-calls': 2,
+                'no-unused-vars': 0,
+                'new-cap': 1,
+                'no-shadow': 0,
+                'strict': [2, 'global'],
+                'no-invalid-regexp': 2,
+                'comma-dangle': 2,
+                'no-undef': 1,
+                'no-new': 1,
+                'no-extra-semi': 1,
+                'no-debugger': 2,
+                'no-caller': 1,
+                'semi': 1,
+                'quotes': 0,
+                'no-unreachable': 2
+            },
+
+            'env': {
+                'node': true,
+                'browser': true
+            },
+
+            'globals': {
+                'ReactDOM': true
+            }
+        }))
+        .pipe(plugins.eslint.format());
 });
 
 // CSS minifying task
@@ -268,7 +296,7 @@ gulp.task('webpack', function() {
     return gulp.src(defaultAssets.client.js)
         .pipe(webpack({
             output: {
-                filename: 'app.js',
+                filename: 'app.js'
             },
             externals: {
                 'react': 'React',
@@ -291,7 +319,7 @@ gulp.task('webpack', function() {
 gulp.task('default', function(done) {
     runSequence(
         'env:dev',
-        // 'jshint',
+        'eslint',
         // 'buildLib',
         // 'buildJs',
         'webpack',
