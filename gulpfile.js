@@ -32,10 +32,12 @@ gulp.task('env:prod', function() {
 
 // Nodemon task
 gulp.task('nodemon', function() {
+
     return plugins.nodemon({
         script: 'server.js',
+        verbose: true,
         // nodeArgs: ['--debug'],
-        // ext: 'js,html',
+        ext: 'js,html,json',
         watch: _.union(
             defaultAssets.server.views,
             defaultAssets.server.allJS,
@@ -50,20 +52,6 @@ gulp.task('nodemon', function() {
 // Watch Files For Changes
 gulp.task('watch', function() {
 
-    // Add watch rules
-    // watch server views
-    // gulp.watch(
-    //     defaultAssets.server.views, [
-    //         //'jshint',
-    //         'buildLib',
-    //         'buildJs',
-    //         'uglify'
-    //     ]
-    // ).on(
-    //     'change',
-    //     plugins.livereload.changed
-    // );
-
     // watch all server js
     gulp.watch(
         defaultAssets.server.allJS,
@@ -72,20 +60,7 @@ gulp.task('watch', function() {
         ]
     );
 
-    // watch all client views
-    // gulp.watch(
-    //     defaultAssets.client.views, [
-    //         //'jshint',
-    //         'buildLib',
-    //         'buildJs',
-    //         'uglify'
-    //     ]
-    // ).on(
-    //     'change',
-    //     plugins.livereload.changed
-    // );
     //
-    // // watch all client js
     gulp.watch(
         defaultAssets.client.js, [
             'eslint',
@@ -99,31 +74,6 @@ gulp.task('watch', function() {
             'sass'
         ]
     );
-});
-
-
-// JS minifying task
-gulp.task('buildLib', function() {
-    return gulp
-        .src(defaultAssets.client.lib.js)
-        .pipe(plugins.concat('lib.js'))
-        .pipe(gulp.dest('./.dist'));
-});
-
-
-// JS minifying task
-gulp.task('buildJs', function() {
-    return gulp
-        .src(defaultAssets.client.js)
-        .pipe(babel({
-            presets: ['react'],
-            only: [
-                'modules/core/client/components'
-            ],
-            compact: false
-        }))
-        .pipe(plugins.concat('application.js'))
-        .pipe(gulp.dest('./.dist'));
 });
 
 
@@ -215,17 +165,6 @@ gulp.task('eslint', function() {
         .pipe(plugins.eslint.format());
 });
 
-// CSS minifying task
-gulp.task('cssmin', function() {
-    return gulp
-        .src('./modules/core/client/sass/app.sass')
-        .pipe(plugins.plumber())
-        .pipe(plugins.sass())
-        .pipe(plugins.cssmin())
-        .pipe(plugins.rename('app.min.css'))
-        .pipe(gulp.dest('./public/css'));
-});
-
 // sass task
 gulp.task('sass', function() {
     return gulp
@@ -234,61 +173,6 @@ gulp.task('sass', function() {
         .pipe(plugins.sass())
         .pipe(plugins.rename('app.css'))
         .pipe(gulp.dest('./public/css'));
-});
-
-// Karma test runner task
-gulp.task('karma', function(done) {
-    return gulp
-        .src([])
-        .pipe(plugins.karma({
-            configFile: 'karma.conf.js',
-            action: 'run',
-            singleRun: true
-        }));
-});
-
-
-
-
-
-// Lint CSS and JavaScript files.
-gulp.task('lint', function(done) {
-    runSequence(
-        'sass',
-        // [
-        //     'jshint'
-        // ],
-        done
-    );
-});
-
-// Lint project files and minify them into two production files.
-gulp.task('build', function(done) {
-    runSequence('env:dev', 'lint', ['uglify', 'cssmin'], done);
-});
-
-// Run the project in debug mode
-gulp.task('debug', function(done) {
-    runSequence(
-        'env:dev',
-        'lint', [
-            'nodemon',
-            'watch'
-        ],
-        done
-    );
-});
-
-// Run the project in production mode
-gulp.task('prod', function(done) {
-    runSequence(
-        'build',
-        'lint', [
-            'nodemon',
-            'watch'
-        ],
-        done
-    );
 });
 
 gulp.task('webpack', function() {
@@ -320,11 +204,8 @@ gulp.task('default', function(done) {
     runSequence(
         'env:dev',
         'eslint',
-        // 'buildLib',
-        // 'buildJs',
         'webpack',
-        // 'uglify',
-        'lint', [
+        [
             'nodemon',
             'watch'
         ],
