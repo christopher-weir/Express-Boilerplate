@@ -24,12 +24,20 @@ module.exports = {
         views: ['modules/*/client/views/**/*.html']
     },
     server: {
-        allJS: ['gulpfile.js', 'server.js', 'config/**/*.js', 'modules/*/server/**/*.js'],
-        models: 'modules/*/server/models/**/*.js',
+        views: [
+            'modules/*/server/views/*.html',
+            'modules/*/server/views/*/*.html'
+        ],
+        allJS: [
+            'gulpfile.js',
+            'server.js',
+            'config/**/*.js',
+            'modules/*/server/**/*.js'
+        ],
+        models: ['modules/*/server/models/**/*.js'],
         routes: ['modules/!(core)/server/routes/**/*.js', 'modules/core/server/routes/**/*.js'],
-        config: 'modules/*/server/config/*.js',
-        policies: 'modules/*/server/policies/*.js',
-        views: 'modules/*/server/views/*.html'
+        config: ['modules/*/server/config/*.js'],
+        policies: ['modules/*/server/policies/*.js']
     },
     shared: {
         react: [
