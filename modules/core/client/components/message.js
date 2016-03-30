@@ -1,10 +1,9 @@
 'use strict';
 
 var React = require('react');
-var ReactDOM = require('react-dom');
+var HelloMessage;
 
-var HelloMessage = React.createClass({
-    displayName: 'HelloMessage2',
+module.exports = HelloMessage = React.createClass({
 
     render: function render() {
         return React.createElement(
@@ -14,18 +13,3 @@ var HelloMessage = React.createClass({
         );
     }
 });
-
-
-
-
-if( process.env.NODE_ENV ){
-
-    module.exports = React.createElement(HelloMessage);
-
-}else{
-
-    var elm = document.getElementById('message');
-    if (elm) {
-        ReactDOM.render(React.createElement(HelloMessage), elm);
-    }
-}
