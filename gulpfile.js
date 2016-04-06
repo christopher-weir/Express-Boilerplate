@@ -77,40 +77,6 @@ gulp.task('watch', function() {
 });
 
 
-// JS minifying task
-gulp.task('uglify', function() {
-
-    if (process.env.NODE_ENV === 'production') {
-        return gulp
-            .src(
-                [
-                    './.dist/lib.js',
-                    './modules/core/client/app/config.js',
-                    './modules/core/client/app/init.js',
-                    './.dist/application.js'
-                ]
-            )
-            .pipe(plugins.uglify({
-                mangle: false
-            }))
-            .pipe(plugins.concat('app.min.js'))
-            .pipe(gulp.dest('public/js'));
-    } else {
-        return gulp
-            .src(
-                [
-                    './.dist/lib.js',
-                    './modules/core/client/app/config.js',
-                    './modules/core/client/app/init.js',
-                    './.dist/application.js'
-                ]
-            )
-            .pipe(plugins.concat('app.js'))
-            .pipe(gulp.dest('public/js'));
-    }
-});
-
-
 // JS linting task
 gulp.task('eslint', function() {
     return gulp
@@ -168,7 +134,7 @@ gulp.task('eslint', function() {
 // sass task
 gulp.task('sass', function() {
     return gulp
-        .src('./modules/core/client/sass/app.sass')
+        .src('./app/core/sass/app.sass')
         .pipe(plugins.plumber())
         .pipe(plugins.sass())
         .pipe(plugins.rename('app.css'))
