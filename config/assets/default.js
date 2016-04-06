@@ -10,39 +10,27 @@ module.exports = {
             ],
             tests: []
         },
-        css: [
-            'modules/*/client/css/*.css'
-        ],
         sass: [
-            'modules/*/client/sass/*/*.sass',
-            'modules/*/client/sass/*.sass'
+            'app/*/sass/*/*.sass',
+            'app/*/sass/*.sass'
         ],
         js: [
-            'modules/*/client/components/*.js',
-            'modules/*/client/module.components.js'
-        ],
-        views: ['modules/*/client/views/**/*.html']
+            'app/*/components/*.js',
+            'app/*/components/*/*.js'
+        ]
     },
     server: {
         views: [
-            'modules/*/server/views/*.html',
-            'modules/*/server/views/*/*.html'
+            'app/*/views/*.html',
+            'app/*/views/*/*.html'
         ],
         allJS: [
             'gulpfile.js',
             'server.js',
             'config/**/*.js',
-            'modules/*/server/**/*.js'
+            'app/*/**/*.js'
         ],
-        models: ['modules/*/server/models/**/*.js'],
-        routes: ['modules/!(core)/server/routes/**/*.js', 'modules/core/server/routes/**/*.js'],
-        config: ['modules/*/server/config/*.js'],
-        policies: ['modules/*/server/policies/*.js']
-    },
-    shared: {
-        react: [
-            'modules/*/shared/!(core.shared.module).js',
-            'modules/*/shared/core.shared.module.js'
-        ]
+        models: ['app/*/models/**/*.js'],
+        routes: ['app/!(core)/routes/**/*.js', 'app/core/routes/**/*.js']
     }
 };
