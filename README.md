@@ -3,6 +3,8 @@ Not ready yet for distribution
 
 ---
 ###TODO
-- Intergrate webpack in the build process
+- ~Intergrate webpack in the build process~
 - Refactor prod and dev tasks
 - Convert yo generator-module to React from Angular
+- Add example pages and components
+- Add basic style for the example
