@@ -899,3 +899,7 @@ h6 {
   font-size: 1.6rem;
   padding: 0;
   text-decoration: none; }
+
+header {
+  border-top: red;
+  color: green; }

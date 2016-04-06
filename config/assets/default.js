@@ -12,7 +12,9 @@ module.exports = {
         },
         sass: [
             'app/*/sass/*/*.sass',
-            'app/*/sass/*.sass'
+            'app/*/sass/*.sass',
+            'app/*/sass/*/*.scss',
+            'app/*/sass/*.scss'
         ],
         js: [
             'app/*/components/*.js',
