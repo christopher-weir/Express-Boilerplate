@@ -11,7 +11,7 @@ var HelloMessage = require('../components/message/message.js');
  */
 exports.renderIndexPage = function( req, res ) {
 
-    res.render('app/core/views/index', {
+    res.render('app/_core/views/index', {
         markup: ReactDOM.renderToString( React.createElement(HelloMessage) )
     });
 

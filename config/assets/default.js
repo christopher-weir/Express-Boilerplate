@@ -33,6 +33,6 @@ module.exports = {
             'app/*/**/*.js'
         ],
         models: ['app/*/models/**/*.js'],
-        routes: ['app/!(core)/routes/**/*.js', 'app/core/routes/**/*.js']
+        routes: ['app/!(_core)/routes/**/*.js', 'app/_core/routes/**/*.js']
     }
 };

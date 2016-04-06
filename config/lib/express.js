@@ -62,7 +62,7 @@ module.exports.initMiddleware = function (app) {
     }));
 
     // Initialize favicon middleware
-    app.use(favicon('./app/core/img/brand/favicon.ico'));
+    app.use(favicon('./app/_core/img/brand/favicon.ico'));
 
     // Environment dependent middleware
     if (process.env.NODE_ENV === 'development') {
@@ -100,8 +100,8 @@ module.exports.initViewEngine = function (app) {
 
 
     handlebars.registerHelper(layouts(handlebars));
-    handlebars.registerPartial('layout', fs.readFileSync('app/core/views/layout.server.view.html', 'utf8'));
-    handlebars.registerPartial('navbar', fs.readFileSync('app/core/views/navbar.server.view.html', 'utf8'));
+    handlebars.registerPartial('layout', fs.readFileSync('app/_core/views/layout.server.view.html', 'utf8'));
+    handlebars.registerPartial('navbar', fs.readFileSync('app/_core/views/navbar.server.view.html', 'utf8'));
 
     handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
