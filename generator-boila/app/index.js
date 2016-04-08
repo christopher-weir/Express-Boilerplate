@@ -71,14 +71,33 @@ module.exports = generators.Base.extend({
             context
         );
 
+        //// controllers
+        this.template(
+            '_controllers.js',
+            'app/' + module_name_folder + '/controllers/' + module_name_folder + '.server.controller.js',
+            context
+        );
 
-        // // if api
-        // this.template(
-        //     'server/_controller.server.controller.js',
-        //     'modules/' + this.moduleName + '/server/controllers/' + this.moduleName + '-route.server.controller.js', {
-        //         module_name: this.moduleName,
-        //         server_type: 'route'
-        //     });
+        //// routes
+        this.template(
+            '_routes.js',
+            'app/' + module_name_folder + '/routes/' + module_name_folder + '.server.routes.js',
+            context
+        );
+
+        //// sass
+        this.template(
+            '_sass.sass',
+            'app/' + module_name_folder + '/sass/' + module_name_folder + '.sass',
+            context
+        );
+
+        //// views
+        this.template(
+            '_view.html',
+            'app/' + module_name_folder + '/views/' + module_name_folder + '.server.view.html',
+            context
+        );
 
     },
 });
