@@ -91,6 +91,7 @@ gulp.task('sass', require('./gulp-tasks/sass')(gulp, plugins));
 gulp.task('default', function(done) {
     runSequence(
         'env:dev',
+        'sass',
         'eslint',
         'webpack',
         [
@@ -105,6 +106,7 @@ gulp.task('default', function(done) {
 gulp.task('production', function(done) {
     runSequence(
         'env:prod',
+        'sass',
         'eslint',
         'webpack',
         [

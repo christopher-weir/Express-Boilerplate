@@ -7,10 +7,14 @@ module.exports = function ( gulp, plugins ) {
 
     return function () {
         gulp
-            .src('app/_core/sass/app.sass')
+            .src([
+                'app/_core/sass/app.sass',
+                'app/!(_core)/sass/*.sass',
+                'app/!(_core)/sass/*.scss'
+            ])
             .pipe(plugins.plumber())
             .pipe(plugins.sass())
-            .pipe(plugins.rename('app.css'))
+            .pipe(plugins.concat('app.css'))
             .pipe(gulp.dest('public/css'));
     };
 };

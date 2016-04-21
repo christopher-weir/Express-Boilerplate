@@ -903,3 +903,6 @@ h6 {
 header {
   border-top: red;
   color: green; }
+
+.example-page {
+  background-color: blue; }
